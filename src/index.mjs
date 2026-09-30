@@ -14,5 +14,13 @@ export function displayAlert(alert) {
   if (typeof alert.compactTitle === 'string' && alert.compactTitle.trim()) {
     display.compactTitle = alert.compactTitle.trim()
   }
+  if (alert.id && alert.severity === 'accessibility' && alert.stations.length === 1) {
+    const stationAccessCopy = new Map([['Bell Street', 'east']])
+    const entrance = stationAccessCopy.get(alert.stations[0])
+    if (entrance && /step-free access/i.test(display.body)) {
+      display.title = 'Step-free access at ' + alert.stations[0]
+      display.body = 'Use the ' + entrance + ' entrance for step-free access.'
+    }
+  }
   return display
 }
